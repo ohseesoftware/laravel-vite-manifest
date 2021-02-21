@@ -4,7 +4,6 @@ namespace OhSeeSoftware\LaravelViteManifest;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use OhSeeSoftware\LaravelViteManifest\Facades\ViteManifest;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -14,14 +13,9 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         Blade::directive('vite', function ($entry) {
-            if (empty($entry)) {
-                $entry = 'js/app.js';
-            } else {
-                // Strip string quotes
-                $entry = str_replace("'", '', $entry);
-            }
+            $entry = empty($entry) ? 'js/app.js' : str_replace("'", '', $entry);
 
-            return ViteManifest::embed($entry);
+            return sprintf('<?php echo echo OhSeeSoftware\LaravelViteManifest\Facades\ViteManifest::embed(e(%s)); ?>', $entry);
         });
     }
 
