@@ -7,7 +7,7 @@
 
 ## Overview
 
-The Laravel Vite Manifest package adds a Blade directive to include Vite's JS and CSS output files, pulled from the generated manifest file.
+The Laravel Vite Manifest package adds a Blade directive to include Vite's JS and CSS output files, pulled from the generated manifest file. The main logic of this package was sourced from https://github.com/andrefelipe/vite-php-setup.
 
 ## Usage
 
