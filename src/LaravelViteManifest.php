@@ -6,12 +6,10 @@ use Illuminate\Support\Facades\App;
 
 class LaravelViteManifest
 {
-    private $manifest = null;
+    private $manifestCache = null;
 
     public function embed(string $entry): string
     {
-        $this->manifest = $this->getManifest();
-
         return $this->jsImports($entry)
             . $this->jsPreloadImports($entry)
             . $this->cssImports($entry);
@@ -19,8 +17,14 @@ class LaravelViteManifest
 
     private function getManifest(): array
     {
+        if ($this->manifestCache) {
+            return $this->manifestCache;
+        }
+
         $content = file_get_contents(public_path('dist/manifest.json'));
-        return json_decode($content, true);
+        $this->manifestCache = json_decode($content, true);
+
+        return $this->manifestCache;
     }
 
     private function jsImports(string $entry): string
@@ -51,7 +55,7 @@ class LaravelViteManifest
     private function preloadUrls(string $entry): array
     {
         $urls = [];
-        $manifest = $this->manifest;
+        $manifest = $this->getManifest();
 
         if (!empty($manifest[$entry]['imports'])) {
             foreach ($manifest[$entry]['imports'] as $imports) {
@@ -78,7 +82,7 @@ class LaravelViteManifest
     private function cssUrls(string $entry): array
     {
         $urls = [];
-        $manifest = $this->manifest;
+        $manifest = $this->getManifest();
 
         if (!empty($manifest[$entry]['css'])) {
             foreach ($manifest[$entry]['css'] as $file) {
@@ -95,7 +99,7 @@ class LaravelViteManifest
 
     private function productionAsset(string $entry): string
     {
-        $manifest = $this->manifest;
+        $manifest = $this->getManifest();
 
         if (!isset($manifest[$entry])) {
             return '';
