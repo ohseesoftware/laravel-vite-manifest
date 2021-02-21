@@ -14,8 +14,9 @@ class ServiceProvider extends BaseServiceProvider
     {
         Blade::directive('vite', function ($entry) {
             $entry = empty($entry) ? 'js/app.js' : str_replace("'", '', $entry);
+            $facade = ViteManifest::class;
 
-            return sprintf('<?php echo echo OhSeeSoftware\LaravelViteManifest\Facades\ViteManifest::embed(e(%s)); ?>', $entry);
+            return sprintf("<?php echo $facade::embed(e(%s)); ?>", $entry);
         });
     }
 
