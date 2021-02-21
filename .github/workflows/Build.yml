@@ -12,7 +12,7 @@ jobs:
             - name: Composer Install
               run: composer install
             - name: PHPCS
-              run: ./vendor/bin/phpcs src tests
+              run: ./vendor/bin/phpcs src
     release:
         name: Release
         if: github.ref == 'refs/heads/master'
