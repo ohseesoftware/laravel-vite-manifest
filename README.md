@@ -1,31 +1,38 @@
-# Laravel Package Boilerplate
+# Laravel Vite Manifest
 
-[![Current Release](https://img.shields.io/github/release/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-package-boilerplate/releases)
-![Build Status Badge](https://github.com/ohseesoftware/laravel-package-boilerplate/workflows/Build/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/ohseesoftware/laravel-package-boilerplate/badge.svg?branch=master)](https://coveralls.io/github/ohseesoftware/laravel-package-boilerplate?branch=master)
-[![Maintainability Score](https://img.shields.io/codeclimate/maintainability/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://codeclimate.com/github/ohseesoftware/laravel-package-boilerplate)
-[![Downloads](https://img.shields.io/packagist/dt/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://packagist.org/packages/ohseesoftware/laravel-package-boilerplate)
-[![MIT License](https://img.shields.io/github/license/ohseesoftware/laravel-package-boilerplate.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-package-boilerplate/blob/master/LICENSE)
+[![Current Release](https://img.shields.io/github/release/ohseesoftware/laravel-vite-manifest.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-vite-manifest/releases)
+![Build Status Badge](https://github.com/ohseesoftware/laravel-vite-manifest/workflows/Build/badge.svg)
+[![Downloads](https://img.shields.io/packagist/dt/ohseesoftware/laravel-vite-manifest.svg?style=flat-square)](https://packagist.org/packages/ohseesoftware/laravel-vite-manifest)
+[![MIT License](https://img.shields.io/github/license/ohseesoftware/laravel-vite-manifest.svg?style=flat-square)](https://github.com/ohseesoftware/laravel-vite-manifest/blob/master/LICENSE)
 
-## TODO:
+## Overview
 
--   Search and replace "laravel-package-boilerplate" with the name of the new package
--   Search and replace "OhSeeSoftware\LaravelPackageBoilerplate" with the namespace of the new package
--   Change the names of the example classes (ExampleServiceProvider, ExampleFacade, etc)
+The Laravel Vite Manifest package adds a Blade directive to include Vite's JS and CSS output files, pulled from the generated manifest file.
 
-### Coverage reporting
+## Usage
 
--   If you want to report on code coverage, setup the repo at [https://coveralls.io](https://coveralls.io)
--   Update the Coveralls image URL in this README file
+```
+composer require ohseesoftware/laravel-vite-manifest
+```
 
-### Maintainability score
+Add the `@vite` directive where you want to include the JS and CSS files:
 
--   If you want to report on code maintainability, setup the repo at [https://codeclimate.com](https://codeclimate.com)
--   Update the Code Climate image URL in this README file
+```
+// app.blade.php
 
-### Write documentation
+@vite
+```
 
--   Remove this TODO section and replace with documentation for your package!
+By default, the directive will attempt to include the `js/app.js` file. However, if you have a different entrypoint file, you can pass that into the directive:
+
+```
+// app.blade.php
+
+@vite('js/main.js')
+```
+
+It is recommended you include your source `.css` files from within your source `js/app.js` file. This will allow Vite to include it as a dependency.
+
 
 ## Changelog
 

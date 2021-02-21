@@ -1,11 +1,12 @@
 {
-    "name": "ohseesoftware/laravel-package-boilerplate",
-    "description": "Describe your package here.",
+    "name": "ohseesoftware/laravel-vite-manifest",
+    "description": "Simple Blade directive to include Vite files from a manifest.",
     "keywords": [
         "ohseesoftware",
-        "laravel"
+        "laravel",
+        "vite"
     ],
-    "homepage": "https://github.com/ohseesoftware/laravel-package-boilerplate",
+    "homepage": "https://github.com/ohseesoftware/laravel-vite-manifest",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -15,27 +16,17 @@
         }
     ],
     "require": {
-        "php": "^7.3"
+        "php": "^7.3",
+        "illuminate/support": ">7.30",
+        "laravel/framework": ">7.30"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0",
-        "php-coveralls/php-coveralls": "^2.2",
-        "phpunit/phpunit": "^8.5",
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {
-            "OhSeeSoftware\\LaravelServerAnalytics\\": "src"
+            "OhSeeSoftware\\LaravelViteManifest\\": "src"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "OhSeeSoftware\\LaravelServerAnalytics\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
@@ -43,10 +34,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "OhSeeSoftware\\LaravelServerAnalytics\\LaravelServerAnalyticsServiceProvider"
+                "OhSeeSoftware\\LaravelViteManifest\\ServiceProvider"
             ],
             "aliases": {
-                "LaravelServerAnalytics": "OhSeeSoftware\\LaravelServerAnalytics\\ServerAnalytics"
+                "LaravelViteManifest": "OhSeeSoftware\\LaravelViteManifest\\LaravelViteManifest"
             }
         }
     }
