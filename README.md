@@ -28,7 +28,7 @@ By default, the directive will attempt to include the `js/app.js` file. However,
 ```
 // app.blade.php
 
-@vite('js/main.js')
+@vite(js/main.js)
 ```
 
 It is recommended you include your source `.css` files from within your source `js/app.js` file. This will allow Vite to include it as a dependency.
