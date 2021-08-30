@@ -36,7 +36,7 @@ class LaravelViteManifest
         if (!$url) {
             return '';
         }
-        return "<script type=\"module\" crossorigin src=\"$url\"></script>";
+        return "<script type=\"module\" src=\"$url\"></script>";
     }
 
     private function jsPreloadImports(string $entry): string
