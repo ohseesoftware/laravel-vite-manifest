@@ -8,9 +8,20 @@ class LaravelViteManifest
 {
     private $manifestCache = null;
 
+    private $devServerIsRunning = false;
+    
+    public function __construct(){
+        try{
+            $this->devServerIsRunning = file_get_contents(public_path('hot')) === 'dev';
+        }
+        catch(\Exception $e){}
+    }
+    
+
     public function embed(string $entry): string
     {
-        return $this->jsImports($entry)
+        return $this->client()
+            . $this->jsImports($entry)
             . $this->jsPreloadImports($entry)
             . $this->cssImports($entry);
     }
@@ -27,11 +38,20 @@ class LaravelViteManifest
         return $this->manifestCache;
     }
 
+    private function client(): string
+    {
+        if($this->devServerIsRunning){
+            $url = 'http://localhost:3000/@vite/client';
+            return "<script type=\"module\" src=\"$url\"></script>";
+        }
+        return "";
+    }
+
     private function jsImports(string $entry): string
     {
-        $url = App::environment('local')
-            ? $this->localAsset($entry)
-            : $this->productionAsset($entry);
+        $url = $this->devServerIsRunning
+        ? $this->localAsset($entry)
+        : $this->productionAsset($entry);
 
         if (!$url) {
             return '';
@@ -41,7 +61,7 @@ class LaravelViteManifest
 
     private function jsPreloadImports(string $entry): string
     {
-        if (App::environment('local')) {
+        if ($this->devServerIsRunning) {
             return '';
         }
 
@@ -68,7 +88,7 @@ class LaravelViteManifest
     private function cssImports(string $entry): string
     {
         // not needed on dev, it's inject by Vite
-        if (App::environment('local')) {
+        if ($this->devServerIsRunning) {
             return '';
         }
 
@@ -94,6 +114,9 @@ class LaravelViteManifest
 
     private function localAsset(string $entry): string
     {
+        if($this->devServerIsRunning){
+            return "http://localhost:3000/{$entry}";
+        }
         return asset($entry);
     }
 
